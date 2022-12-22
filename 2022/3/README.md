@@ -128,3 +128,12 @@ O(2N) or O(N)
 ```
 
 Our memory complexity relates to the size of the input language and not the size of anyone unbound input. I'll say memory complexity is `O(L)`, but we know thee language is bounded which is a major plus.
+
+## C Oddities
+
+`fgets` will not read the last line if it doesn't have a `\n`.
+https://stackoverflow.com/questions/2392549/fgets-is-omitting-the-last-line-in-c
+
+`&^` in C: https://stackoverflow.com/questions/34459450/what-is-the-operator-in-golang/34459527#34459527
+
+Bitwise operations on unsigned long long: https://stackoverflow.com/questions/26684351/bitwise-operations-on-unsigned-long-long-in-c

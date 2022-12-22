@@ -20,19 +20,19 @@ uint64_t mask(char theChar) {
     return 1LLU << shift;
 }
 
-char unmask(uint64_t theMask) {
+char priority(char theChar) {
     //a shift multiplies by 2 (exponentation)
     //log2 gives the number of multiplications or shifts.
-    int shifts = log2(theMask);
-    if (shifts >= 0 && shifts <= 25) {
-        return shifts + 'a';
+    if (theChar >= 'a' && theChar <= 'z') {
+        return theChar - 'a' + 1;
     }
-    return shifts + 'A' + 25;
+    return theChar - 'A' + 27;
 }
 
 int main() {
     FILE* input = fopen("./input.txt", "r");
     char buff[50];
+    int prioritySum = 0;
     //read the full buffer each time.
     while(1) {
      //for each line
@@ -48,15 +48,19 @@ int main() {
             i += 1;
         }
 
+        
         while (i < len) {
             uint64_t theMask = mask(buff[i]);
             if ((bitset & theMask) == theMask) {
                 //https://stackoverflow.com/a/34459527/456809
                 //bitset = bitset & ~theMask; //unset
+                prioritySum += priority(buff[i]);
                 printf("common: %c %g\n", buff[i], log2(theMask));
+                break;
             }
             i += 1;
         }
+        printf("prioritySum %d\n", prioritySum);
      } else {
         printf("errno: %d", errno);
         exit(errno);
