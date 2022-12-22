@@ -16,9 +16,15 @@ int main() {
 
      ssize_t i = 0;
      while (i < bytesRead) {
-        length += 1;
+        if (buff[i] == '\n') {
+            printf("%d bytes\n", length);
+            length = 0;
+        } else {
+            length += 1;
+        }
+
         i += 1;
      }
     }
-    printf("%d bytes\n", length);
+    
 }
