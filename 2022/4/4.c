@@ -22,14 +22,27 @@ struct bounds parseLine(char *line) {
 
     for (size_t i = 0; i < linelen; i++) {
         char current = line[i];
+        int bound;
+        //when it's the last thing to parse just parse the string.
+        if (elf == 1 && side == 1) {
+            printf("%c\n", line[i]);
+            bound = atoi(&line[i]);
+            result.right[1] = bound;
+            break;
+        }
 
         if (current == '-' || current == ',') {
-            line[i] = '\0';
-            //pointer arithmetic to get the substring
-            //https://beej.us/guide/bgc/html/split/pointers2.html#pointers2
-            int bound = atoi(&line[i]-seekoffset);
-            printf("elf: %zu, offset: %zu, bound: %zu, %d\n", elf, seekoffset, side, bound);
-            seekoffset = 0;
+                line[i] = '\0';
+                //pointer arithmetic to get the substring
+                //https://beej.us/guide/bgc/html/split/pointers2.html#pointers2
+                bound = atoi(&line[i]-seekoffset);
+                seekoffset = 0;
+
+            if (elf == 0) {
+                result.left[side] = bound;
+            } else {
+                result.right[side] = bound;
+            }
 
             if (current == ',') {
                 elf = 1;
@@ -41,7 +54,6 @@ struct bounds parseLine(char *line) {
             }
             continue;
         }
-        printf("%c\n", current);
 
         seekoffset += 1;
     }
@@ -53,6 +65,9 @@ int main() {
    char line[100];
 
    while(fgets(line, sizeof(line), input) != NULL) {
-    parseLine(line);
+    struct bounds lineBounds = parseLine(line);
+    printf("elf0: (%d,%d), elf1: (%d,%d)\n",
+     lineBounds.left[0],lineBounds.left[1],
+     lineBounds.right[0], lineBounds.right[1]);
    }
 }
