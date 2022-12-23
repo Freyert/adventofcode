@@ -23,6 +23,55 @@ If I want to split the string in place,  I can just replace `-` and `,` with `\0
 
 Then I would track a `strlen` for the current string, jump back that far in memory, process the string into an int, jump forward again, and resume parsing the string.
 
+# Checking Overlap
+
+For some reason I feel like this comes up a lot. I think I can remember a few leetcode challenges that required bounds checking for overlap. Potentially to avoid redundant calculations.
+
+## Part 1: Total Containment
+
+For one (A) range to totally contain another range (B):
+
+* B_left >= A_left
+* B_right <= A_right
+
+visually:
+
+```
+A_left --------------- A_right
+      B_left-----B_right
+```
+
+The relationship needs to be commutative as well because of the
+wording: if one range consumes another. Meaning `consumes(A,B)` should
+return true if either A or B consumes the other. We'll use this later.
+
+## Part 2: Any Overlap
+
+Now we just want to check for any overlap, let's list the cases where A overlaps B.
+
+```
+//ranges are equivalent
+A_left -------- A_right
+B_left -------- B_right
+
+//B_left is contained in A (B_left >= A_left && B_left <= A_right)
+A_left -------- A_right
+           B_left -------- B_right
+
+//B_right is contained in A (B_right >= A_left && B_right <= A_right)
+        A_left -------- A_right
+B_left -------- B_right
+```
+
+The following [StackOverflow answer](https://stackoverflow.com/a/3269471/456809) explains things very succintly.
+
+But in our case the check needs to be commutative as well.
+
+## Commutative Property
+
+Truth tables suck to write by hand, and we haven't even written the
+other half of the truth table which is if A overlaps with B.
+
 # C Learnings
 
 Multidimensional Arrays: https://www.tutorialspoint.com/cprogramming/c_multi_dimensional_arrays.htm

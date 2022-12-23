@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct bounds {
     int left[2];
@@ -60,6 +61,10 @@ struct bounds parseLine(char *line) {
     return result;
 }
 
+bool overlap(int a[], int b[]) {
+    return a[0] <= b[1] && b[0] <= a[1];
+}
+
 int main() {
    FILE* input = fopen("./input.txt", "r");
    char line[100];
@@ -70,9 +75,9 @@ int main() {
      lineBounds.left[0],lineBounds.left[1],
      lineBounds.right[0], lineBounds.right[1]);
     if (
-        (lineBounds.left[0] >= lineBounds.right[0] && lineBounds.left[1] <= lineBounds.right[1]) ||
-        (lineBounds.right[0] >= lineBounds.left[0] && lineBounds.right[1] <= lineBounds.left[1])
-        ) {
+        overlap(lineBounds.left, lineBounds.right) ||
+        overlap(lineBounds.right, lineBounds.left)
+    ) {
             count += 1;
         }
    }
