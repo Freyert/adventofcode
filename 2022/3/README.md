@@ -129,6 +129,10 @@ O(2N) or O(N)
 
 Our memory complexity relates to the size of the input language and not the size of anyone unbound input. I'll say memory complexity is `O(L)`, but we know thee language is bounded which is a major plus.
 
+### Screw it, just use fgets
+
+In this situation I know my line inputs around 20-50 characters each so using fseek is way over optimizing and boy oh boy does it complicate the whole solution.
+
 ## C Oddities
 
 `fgets` will not read the last line if it doesn't have a `\n`.
