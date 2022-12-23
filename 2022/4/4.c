@@ -63,11 +63,18 @@ struct bounds parseLine(char *line) {
 int main() {
    FILE* input = fopen("./input.txt", "r");
    char line[100];
-
+   int count = 0;
    while(fgets(line, sizeof(line), input) != NULL) {
     struct bounds lineBounds = parseLine(line);
     printf("elf0: (%d,%d), elf1: (%d,%d)\n",
      lineBounds.left[0],lineBounds.left[1],
      lineBounds.right[0], lineBounds.right[1]);
+    if (
+        (lineBounds.left[0] >= lineBounds.right[0] && lineBounds.left[1] <= lineBounds.right[1]) ||
+        (lineBounds.right[0] >= lineBounds.left[0] && lineBounds.right[1] <= lineBounds.left[1])
+        ) {
+            count += 1;
+        }
    }
+   printf("count: %d", count);
 }
